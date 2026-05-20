@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class ClientConfig {
+
     @Bean
     public RestClient productRestClient(
             @Value("${product-service.base-url}") String baseUrl) {
@@ -14,6 +15,4 @@ public class ClientConfig {
                 .baseUrl(baseUrl)
                 .build();
     }
-
-
 }
