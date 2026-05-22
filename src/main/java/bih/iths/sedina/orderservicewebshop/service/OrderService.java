@@ -65,9 +65,13 @@ public class OrderService {
         order.setOrderItems(orderItems);
         order.setTotalPrice(totalPrice);
 
+        for (OrderItem item : orderItems) {
+            item.setOrder(order);
+        }
+
         Order savedOrder = orderRepository.save(order);
 
-        messagePublisher.publish("Order created: " + savedOrder.getId());
+        messagePublisher.publish(savedOrder);
 
         return savedOrder;
     }
