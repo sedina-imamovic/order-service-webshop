@@ -15,13 +15,12 @@ public class MessagePublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
-    public void publish(Order order, String email) {
+    public void publish(Order order) {
 
         Map<String, Object> message = new HashMap<>();
 
         message.put("orderId", order.getId());
-        message.put("email", email);
-        message.put("customerName", order.getCustomerName());
+        message.put("email", order.getCustomerName());
         message.put("orderDate", order.getOrderDate());
         message.put("totalPrice", order.getTotalPrice());
 

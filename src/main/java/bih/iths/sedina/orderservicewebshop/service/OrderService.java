@@ -71,7 +71,7 @@ public class OrderService {
 
         Order savedOrder = orderRepository.save(order);
 
-        messagePublisher.publish(savedOrder, jwt.getSubject());
+        messagePublisher.publish(savedOrder);
 
         return savedOrder;
     }
