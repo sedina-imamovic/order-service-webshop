@@ -31,8 +31,7 @@ public class MessagePublisher {
                                 "productId", item.getId(),
                                 "name", item.getName(),
                                 "price", item.getPrice(),
-                                "quantity", item.getQuantity()
-                        ))
+                                "quantity", item.getQuantity()))
                         .toList());
 
         rabbitTemplate.convertAndSend(RabbitConfig.QUEUE, message);
