@@ -15,8 +15,8 @@ public class OpenApiConfig {
         String schemeName = "bearerAuth";
         return new OpenAPI()
                 .info(new Info()
-                        .title("Person Service API")
-                        .description("Simple JWT protected person microservice")
+                        .title("Order Service API")
+                        .description("JWT protected order microservice")
                         .version("1.0"))
                 .addSecurityItem(new SecurityRequirement().addList(schemeName))
                 .components(new Components()
