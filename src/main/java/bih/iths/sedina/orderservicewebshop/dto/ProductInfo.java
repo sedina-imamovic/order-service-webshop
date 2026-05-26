@@ -1,8 +1,11 @@
 package bih.iths.sedina.orderservicewebshop.dto;
 
+import java.math.BigDecimal;
+
 public record ProductInfo(
         Long id,
         String name,
-        Double price
+        BigDecimal price,
+        int quantity
 ) {
 }
