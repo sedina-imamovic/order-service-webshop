@@ -1,6 +1,6 @@
 package bih.iths.sedina.orderservicewebshop.controller;
 
-import bih.iths.sedina.orderservicewebshop.dto.CreateOrderRequest;
+import bih.iths.sedina.orderservicewebshop.dto.OrderRequest;
 import bih.iths.sedina.orderservicewebshop.model.Order;
 import bih.iths.sedina.orderservicewebshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<Order> createOrder(
-            @RequestBody CreateOrderRequest request,
+            @RequestBody OrderRequest request,
             @AuthenticationPrincipal Jwt jwt) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(orderService.createOrder(request, jwt));
