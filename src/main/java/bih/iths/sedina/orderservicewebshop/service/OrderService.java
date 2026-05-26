@@ -25,7 +25,7 @@ public class OrderService {
 
     public Order createOrder(OrderRequest request, Jwt jwt) {
 
-        List<ProductInfo> products = productClient.decreaseStock(request.items());
+        List<ProductInfo> products = productClient.decreaseStock(request.items(), jwt.getTokenValue());
 
         List<OrderItem> orderItems = new ArrayList<>();
 
