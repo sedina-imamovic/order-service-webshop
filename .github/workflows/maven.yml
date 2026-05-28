@@ -44,3 +44,8 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/order-service-webshop:latest
+
+    - name: Trigger Render Deploy
+      if: github.event_name != 'pull_request'
+      run: |
+        curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
