@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtValidators;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
@@ -65,13 +64,8 @@ public class SecurityConfig {
 
     @Bean
     public JwtDecoder jwtDecoder(@Value("${app.auth-server-url}") String authServerUrl) {
-        NimbusJwtDecoder jwtDecoder =
-                NimbusJwtDecoder.withJwkSetUri(authServerUrl + "/auth/jwks")
-                        .build();
-
-        jwtDecoder.setJwtValidator(
-                JwtValidators.createDefaultWithIssuer(authServerUrl));
-
-        return jwtDecoder;
+        return NimbusJwtDecoder
+                .withJwkSetUri(authServerUrl + "/auth/jwks")
+                .build();
     }
 }
