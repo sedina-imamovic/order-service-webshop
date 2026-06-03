@@ -19,7 +19,7 @@ public class ProductClient {
                                            String bearerToken) {
         return restClient.post()
                 .uri("/products/stock/decrease")
-                .header("Authorization", "Bearer" + bearerToken)
+                .header("Authorization", bearerToken)
                 .body(items)
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {
