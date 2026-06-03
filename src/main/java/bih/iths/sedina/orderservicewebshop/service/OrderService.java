@@ -27,6 +27,10 @@ public class OrderService {
 
         List<ProductInfo> products = productClient.decreaseStock(request.items(), jwt.getTokenValue());
 
+        Order order = new Order();
+        order.setOrderDate(LocalDate.now());
+        order.setCustomerName(jwt.getSubject());
+
         List<OrderItem> orderItems = new ArrayList<>();
 
         double totalPrice = 0;
@@ -44,10 +48,6 @@ public class OrderService {
             totalPrice += product.price().doubleValue() * product.quantity();
         }
 
-        Order order = new Order();
-
-        order.setOrderDate(LocalDate.now());
-        order.setCustomerName(jwt.getSubject());
         order.setOrderItems(orderItems);
         order.setTotalPrice(totalPrice);
 
