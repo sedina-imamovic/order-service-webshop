@@ -1,10 +1,8 @@
 package bih.iths.sedina.orderservicewebshop.dto;
 
-public record ProductInfo(
-        Long id,
+public record OrderItemResponseDto(
         String name,
-        String description,
         double price,
-        String stock
+        int quantity
 ) {
 }
