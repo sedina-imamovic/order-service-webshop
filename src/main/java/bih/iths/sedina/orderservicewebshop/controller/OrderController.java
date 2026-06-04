@@ -24,7 +24,8 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(
             @RequestBody OrderRequest request,
             @AuthenticationPrincipal Jwt jwt) {
+        String bearerToken = jwt.getTokenValue();
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(orderService.createOrder(request, jwt));
+                .body(orderService.createOrder(request, jwt.getSubject(), bearerToken));
     }
 }
