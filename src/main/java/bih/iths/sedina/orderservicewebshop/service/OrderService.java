@@ -68,7 +68,7 @@ public class OrderService {
                 savedOrder.getTotalPrice());
 
         rabbitTemplate.convertAndSend("email-queue", message);
-
+        
         return sendOrder(savedOrder);
 
     }
@@ -92,5 +92,6 @@ public class OrderService {
                 .map(this::sendOrder)
                 .toList();
     }
+
 
 }
