@@ -17,6 +17,7 @@ public class ProductClient {
 
     public List<ProductInfo> decreaseStock(List<OrderItemRequest> items,
                                            String bearerToken) {
+        // Skickar en POST-förfrågan till produktservicen för att minska lagersaldo för en lista av produkter
         return restClient.post()
                 .uri("/products/stock/decrease")
                 .header("Authorization", bearerToken)

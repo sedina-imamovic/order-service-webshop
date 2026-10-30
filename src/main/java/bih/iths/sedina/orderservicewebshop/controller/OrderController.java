@@ -19,9 +19,11 @@ public class OrderController {
 
     private final OrderService orderService;
 
+    //enpoint för att skapa en ny order
     @PostMapping
     public ResponseEntity<OrderResponseDto> createOrder(
             @RequestBody CreateOrderRequest request,
+            //hämtar ut jwt token från den inloggade användaren
             @AuthenticationPrincipal Jwt jwt) {
         String bearerToken = "Bearer " + jwt.getTokenValue();
 
@@ -32,6 +34,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    //endpoint för att hämta alla orders
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());

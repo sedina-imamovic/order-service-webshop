@@ -12,17 +12,19 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
     public static final String QUEUE = "email-queue";
-
+    // Skapar en RabbitMQ-kö med namnet "email-queue" och gör den hållbar
     @Bean
     public Queue queue() {
         return new Queue(QUEUE, true);
     }
 
+    // Skapar en meddelandekonverterare som använder JSON
     @Bean
     public MessageConverter messageConverter() {
         return new JacksonJsonMessageConverter();
     }
 
+    // Skapar en RabbitTemplate som använder den angivna ConnectionFactory och meddelandekonverteraren
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
