@@ -11,10 +11,12 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
+// MessagePublisher är en komponent som ansvarar för att publicera meddelanden om order till RabbitMQ
 public class MessagePublisher {
 
     private final RabbitTemplate rabbitTemplate;
 
+    // Metod som publicerar ett meddelande om en order till RabbitMQ
     public void publish(Order order) {
 
         Map<String, Object> message = new HashMap<>();

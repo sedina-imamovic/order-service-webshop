@@ -7,6 +7,7 @@ import org.springframework.web.client.RestClient;
 
 @Configuration
 public class ClientConfig {
+    // Bean för att skapa en RestClient för produktservice med bas-URL från application.properties
     @Bean
     public RestClient productRestClient(
             @Value("${product-service.base-url}") String baseUrl) {

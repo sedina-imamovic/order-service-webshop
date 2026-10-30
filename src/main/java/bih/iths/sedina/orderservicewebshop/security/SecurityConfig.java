@@ -23,9 +23,11 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // Konstruktor för SecurityConfig som tar emot värden från application.properties
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
 
+        // Skapar en JwtAuthenticationConverter som konverterar JWT till Spring Securitys Authentication
         JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
 
         converter.setJwtGrantedAuthoritiesConverter(jwt -> {
@@ -35,6 +37,7 @@ public class SecurityConfig {
                 return List.of();
             }
 
+            // Konverterar roller från JWT till GrantedAuthority
             return roles.stream()
                     .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
                     .toList();
@@ -42,12 +45,14 @@ public class SecurityConfig {
         return converter;
     }
 
+    // Bean för att skapa en SecurityFilterChain som definierar säkerhetskonfigurationen
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http,
             JwtAuthenticationConverter jwtAuthenticationConverter
 
     ) throws Exception {
+        // Konfigurerar HttpSecurity för att hantera säkerhet, CORS och JWT-autentisering
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> {
@@ -65,6 +70,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // Bean för att skapa en JwtDecoder som hämtar JWK-set från AuthServer
     @Bean
     public JwtDecoder jwtDecoder(@Value("${app.auth-server-url}") String authServerUrl) {
         return NimbusJwtDecoder
@@ -73,6 +79,7 @@ public class SecurityConfig {
     }
 
 
+    // Bean för att skapa en CorsConfigurationSource som definierar CORS-konfigurationen
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

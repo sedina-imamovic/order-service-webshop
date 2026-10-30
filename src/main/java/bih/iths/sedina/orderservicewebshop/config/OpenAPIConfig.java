@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenAPIConfig {
+    // Bean som skapar en OpenAPI-instans med information om API:t och säkerhetskrav
     @Bean
     public OpenAPI openAPI() {
         String schemeName = "bearerAuth";
         return new OpenAPI()
+                // Lägg till information om API:t, inklusive titel, beskrivning och version
                 .info(new Info()
                         .title("Order Service API")
                         .description("Simple JWT protected order-service")
