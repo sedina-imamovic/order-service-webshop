@@ -36,8 +36,20 @@ public class OrderController {
 
     //endpoint för att hämta alla orders
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+    public ResponseEntity<List<OrderResponseDto>> getAllOrders(
+            @AuthenticationPrincipal Jwt jwt) {
+
+        // Kontrollerar om användaren har rollen ADMIN
+        boolean isAdmin = jwt.getClaimAsStringList("roles").contains("ADMIN");
+
+        // ADMIN får hämta alla ordrar
+        if (isAdmin) {
+            return ResponseEntity.ok(orderService.getAllOrders());
+        }
+
+        // USER får endast hämta sina egna ordrar
+        String customerName = jwt.getSubject();
+        return ResponseEntity.ok(orderService.getOrdersByCustomerName(customerName));
     }
 
 }
