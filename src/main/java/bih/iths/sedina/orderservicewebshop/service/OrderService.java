@@ -102,5 +102,11 @@ public class OrderService {
                 .toList();
     }
 
+    // Hämtar alla ordrar som tillhör en specifik kund
+    public List<OrderResponseDto> getOrdersByCustomerName(String customerName) {
+        return orderRepository.findByCustomerName(customerName).stream()
+                .map(this::sendOrder)
+                .toList();
+    }
 
 }

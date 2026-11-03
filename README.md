@@ -6,12 +6,16 @@ Order Service is a Spring Boot microservice responsible for managing customer or
 
 It creates and stores orders, communicates with Product Service to decrease product stock, calculates order totals, and publishes order-related messages to RabbitMQ.
 
+The service also handles order retrieval based on the authenticated user's role.
+
 ## Responsibilities
 
 Order Service handles:
 
 * Creating new orders.
-* Retrieving all orders.
+* Retrieving orders based on the authenticated user's role.
+* Allowing administrators to retrieve all orders.
+* Allowing customers to retrieve only their own orders.
 * Storing orders and order items in a database.
 * Calculating order totals.
 * Communicating with Product Service to decrease product stock.
@@ -87,14 +91,34 @@ Do not commit database credentials, passwords, or other secrets to the repositor
 
 The `OrderController` exposes the following endpoints:
 
-| Method | Endpoint  | Description                                     |
-| ------ | --------- | ----------------------------------------------- |
-| `POST` | `/orders` | Creates an order and returns the created order. |
-| `GET`  | `/orders` | Retrieves all orders.                           |
+| Method | Endpoint  | Description                                              |
+| ------ | --------- | -------------------------------------------------------- |
+| `POST` | `/orders` | Creates an order and returns the created order.          |
+| `GET`  | `/orders` | Retrieves orders based on the authenticated user's role. |
 
 Creating an order requires the customer's JWT to be available to the controller.
 
-The `POST /orders` endpoint returns HTTP `201 Created` when the controller successfully creates the order. The `GET /orders` endpoint returns HTTP `200 OK`.
+The `POST /orders` endpoint returns HTTP `201 Created` when the controller successfully creates the order.
+
+The `GET /orders` endpoint returns HTTP `200 OK` and applies role-based filtering:
+
+* Customers with the `USER` role can only retrieve their own orders.
+* Users with the `ADMIN` role can retrieve all orders.
+
+## Authentication and Authorization
+
+Order Service uses Spring Security OAuth2 Resource Server to authenticate incoming requests using JWT tokens.
+
+The authenticated user's identity is retrieved from the JWT `subject` claim.
+
+The service uses the JWT roles claim to determine which orders the authenticated user is allowed to retrieve.
+
+Order retrieval follows these rules:
+
+* `USER`: Retrieves orders belonging to the authenticated customer.
+* `ADMIN`: Retrieves all orders.
+
+The customer's identity is used when creating new orders, ensuring that each order is associated with the authenticated customer.
 
 ## Communication with Product Service
 
